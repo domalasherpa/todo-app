@@ -6,7 +6,13 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ['Inter', 'sans-serif'],
+        'magilio': ['Magilio', 'sans-serif'],
+        'bacasime':[ 'Bacasime Antique', 'serif'],                           
+      },
+    },
   },
   plugins: [],
 }
