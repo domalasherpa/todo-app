@@ -1,19 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>ToDo</title>
-
-    </head>
-    <body class="antialiased ">
-        <div class="justify-center items-center min-h-screen">
-            <h1>ToDo list</h1>
-        </div>
-    </body>
-</html> --}}
-
 <!doctype html>
 <html>
 <head>
@@ -31,7 +15,7 @@
             To Do List
         </h1>
 
-        <div class="mb-3">
+        <div class="my-8">
             <form action="" method="POST" class="flex flex-col space-y-2">
                 @csrf
                 <input type="text" name="title" placeholder="title" class="w-full bg-gray-100 p-3 rounded-xl ">
@@ -44,19 +28,31 @@
         </div>
     
         @if(count($todos)> 0)
-            <div class="mb-3">
-                <h1 class="text-xl">To be done</h1>
+            <div class="" id="">
+                <h1 class="text-xl underline my-3">List</h1>
+                @php($count = 0)
                 @foreach ($todos as $todo)
+                @php($count++)
                     <div class="flex items-center border-b">
-                        <div class="flex-1">
-                            <h3 class="text-lg text-gray-800 "> {{$todo->title}}</h3>
-                            <p class="text-gray-500">{{$todo->description}}</p>
+                        <div class="flex mx-3">
+                            <form action="" method="POST">
+                                @csrf
+                                {{-- @method('PATCH') --}}
+                                <input type="checkbox" name="completed" id="completed{{$count}}"{{$todo->completed ? 'checked' : ''}} class="accent-green-200">    
+                            </form>                                   
                         </div>
+
+                        <label for="completed{{$count}}" class="flex-1">
+                            <div class="flex-1">
+                                <h3 class="text-lg text-gray-800 "> {{$todo->title}}</h3>
+                                <p class="text-gray-500">{{$todo->description}}</p>
+                            </div>
+                        </label>
+
                         <div class="flex space-x-3">
-                            
                             <form action="/{{ $todo->id }}" method="POST">
                                 @csrf
-                                @method('PATCH')
+                                {{-- @method('PATCH') --}}
                                 <button class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-5 h-5 hover:fill-green-300" >
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -74,12 +70,13 @@
                                 </button>
                             </form>
                         </div>
-
                     </div>
                 @endforeach
             </div>
+            
+            {{ $todos->links('pagination.custom') }}
+        
         @endif
     </div>
-  
 </body>
 </html>
