@@ -33,12 +33,17 @@
                 @php($count = 0)
                 @foreach ($todos as $todo)
                 @php($count++)
-                    <div class="flex items-center border-b">
+                    <div class="flex items-center border-b pr-2 rounded-xl mb-1
+                    {{$todo->completed ? 'bg-green-100' : ''}}
+                    ">
                         <div class="flex mx-3">
-                            <form action="" method="POST">
+                            <form action="/{{$todo->id}}" method="POST">
                                 @csrf
-                                {{-- @method('PATCH') --}}
-                                <input type="checkbox" name="completed" id="completed{{$count}}"{{$todo->completed ? 'checked' : ''}} class="accent-green-200">    
+                                @method('PATCH')
+                                <input type="checkbox" name="completed" id="completed{{$count}}"
+                                onchange="this.form.submit()" class="accent-green-200"
+                                {{$todo->completed ? 'checked' : '' }}
+                                >    
                             </form>                                   
                         </div>
 

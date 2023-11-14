@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoretodoRequest;
 use App\Http\Requests\UpdatetodoRequest;
-use App\Models\todo;
+use App\Models\Todo;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -45,7 +45,7 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(todo $todo)
+    public function show(Todo $todo)
     {
         //
     }
@@ -53,7 +53,7 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(todo $todo)
+    public function edit(Todo $todo)
     {
         //
     }
@@ -61,10 +61,10 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(todo $todo)
+    public function update(Todo $todo)
     {
         //
-        $todo->update(['completed'=>true]);
+        $todo->update(['completed'=> !$todo->completed]);
         return redirect('/');
     }
 
@@ -72,7 +72,7 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(todo $todo)
+    public function destroy(Todo $todo)
     {
         //
         $todo->delete();
