@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoretodoRequest;
 use App\Http\Requests\UpdatetodoRequest;
 use App\Models\Todo;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
 
 class TodoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         //
@@ -32,6 +36,7 @@ class TodoController extends Controller
 
         Todo::create($todo);
         return redirect('/');
+        //todo redirect to last page when new item is added
     }
 
     /**
@@ -65,7 +70,7 @@ class TodoController extends Controller
     {
         //
         $todo->update(['completed'=> !$todo->completed]);
-        return redirect('/');
+        return Redirect(url()->previous());
     }
 
 
@@ -76,6 +81,6 @@ class TodoController extends Controller
     {
         //
         $todo->delete();
-        return redirect('/');
+        return redirect(url()->previous());
     }
 }
