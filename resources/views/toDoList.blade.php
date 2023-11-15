@@ -50,7 +50,7 @@
                         <label for="completed{{$count}}" class="flex-1">
                             <div class="flex-1">
                                 <h3 class="text-lg text-gray-800 "> {{$todo->title}}</h3>
-                                <p class="text-gray-500">{{$todo->description}}</p>
+                                <p class="text-gray-500 line-clamp-1 hover:line-clamp-none">{{$todo->description}}</p>
                             </div>
                         </label>
 
