@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoretodoRequest;
 use App\Http\Requests\UpdatetodoRequest;
 use App\Models\Todo;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,45 +18,44 @@ class TodoController extends Controller
 
     public function index()
     {
-        //
         $todos = Todo::paginate(3);
         return view('toDoList',['todos'=>$todos]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    //create new todo list
     public function create(Request $request)
     {
         //
         $todo = $request->validate([
             'title' => 'required',
             'description' => 'required',
-        ]);
+        ], 
+        [
+            'title.required' => 'Title is required',
+            'description.required' => 'Description is required']
+        );
 
         Todo::create($todo);
-        return redirect('/');
-        //todo redirect to last page when new item is added
+
+        $lastPage = Todo::paginate(3)->lastPage();  
+        return redirect('/?page='.$lastPage);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(StoretodoRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Todo $todo)
     {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource...
+     * might add functionality to edit todo list
      */
     public function edit(Todo $todo)
     {
